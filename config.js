@@ -1,0 +1,1 @@
+window.FX_CONFIG={url:"https://bqvygaqvwmakbrxnllws.supabase.co",key:"sb_publishable_M8zD44AbCWO1rjBdWVbGJA_lfRLKvwz",vapid:"BE1SNSDY7nk30Q86-ZsiFkPeUjWN7_cz31bcVZVq5FE7MVMGF25__0dQxLHBsUq3MwbXBzKbFwoFecR2RG9FnhU",brakeTrainer:"https://rikichristo.github.io/brake-trainer/"};
