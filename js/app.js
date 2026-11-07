@@ -160,19 +160,20 @@ const TYPE_C = t => /^run_/.test(t) ? "var(--tr)" : t === "mob" || t === "recove
 
 /* chrome: the mark is the way home on every screen except home itself, the player and drills */
 function chrome(kind) {
-  const home = kind === "home", full = kind === "full";
+  const intro = kind === "intro", home = kind === "home" || intro, full = kind === "full";
   const img = `<img src="${window.FX_LOGO}" alt="VCASO Performance">`;
   $("#mark").innerHTML = full ? `<span class="fx-mark" style="visibility:hidden">${img}</span>`
     : home ? `<span class="fx-mark">${img}</span>`
     : `<button class="fx-mark" data-act="home" aria-label="Home">${img}</button>`;
-  $("#sideR").innerHTML = full ? "" : `<button class="iconbtn" data-go="#/me" aria-label="Settings">${I.gear}</button>`;
-  $("#sideL").innerHTML = full ? "" : (S.user || S.mode === "local") ? `<span class="sync" id="sync"><i></i><span>${S.mode === "local" ? "On this phone" : navigator.onLine ? "" : "Offline"}</span></span>` : "";
+  $("#sideR").innerHTML = full || intro ? "" : `<button class="iconbtn" data-go="#/me" aria-label="Settings">${I.gear}</button>`;
+  $("#sideL").innerHTML = full || intro ? "" : (S.user || S.mode === "local") ? `<span class="sync" id="sync"><i></i><span>${S.mode === "local" ? "On this phone" : navigator.onLine ? "" : "Offline"}</span></span>` : "";
   const tab = S.route[0] || "";
   const tabs = [["", "Today", I.today, "var(--ink)"], ["plan", "Plan", I.plan, "var(--tr)"], ["fuel", "Fuel", I.fuel, "var(--nu)"], ["rec", "Recover", I.rec, "var(--rc)"], ["score", "Score", I.score, "var(--sc)"]];
   const map = { day: "plan", drill: "", me: "" };
   const cur = map[tab] ?? tab;
   $("#tabs").innerHTML = full || !S.profile ? "" : `<div class="wrap">${tabs.map(([r, l, ic, c]) => `<a href="#/${r}" style="--c:${c}" ${cur === r ? 'aria-current="page"' : ""}>${ic}<span>${l}</span></a>`).join("")}</div>`;
   $("#main").classList.toggle("full", full || !S.profile);
+  $("#top").classList.toggle("intro", intro);
 }
 
 /* ---------- router ---------- */
@@ -182,8 +183,8 @@ function route() {
 }
 function render() {
   const [r, a] = S.route;
-  if (S.mode == null) { chrome("full"); return viewWelcome(); }
-  if (!S.profile || !S.profile.ready) { chrome("full"); return viewOnboard(); }
+  if (S.mode == null) { chrome("intro"); return viewWelcome(); }
+  if (!S.profile || !S.profile.ready) { chrome("intro"); return viewOnboard(); }
   if (r === "go") { chrome("full"); return viewPlayer(a || todayISO()); }
   if (r === "drill") { chrome("full"); return viewDrill(a); }
   chrome(!r ? "home" : "page");

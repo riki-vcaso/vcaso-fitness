@@ -1,6 +1,6 @@
 /* VCASO Fitness service worker: works offline in a hotel or on the rig, shows the morning alert. */
-const CACHE = "fx-v1";
-const SHELL = ["./", "index.html", "style.css?v=1", "config.js?v=1", "js/logo.js", "js/engine.js?v=1", "js/drills.js?v=1", "js/app.js?v=1", "manifest.webmanifest", "img/icon-192.png"];
+const CACHE = "fx-v2";
+const SHELL = ["./", "index.html", "style.css?v=2", "config.js?v=2", "js/logo.js", "js/engine.js?v=2", "js/drills.js?v=2", "js/app.js?v=2", "manifest.webmanifest", "img/icon-192.png"];
 self.addEventListener("install", e => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => {})); });
 self.addEventListener("activate", e => e.waitUntil((async () => {
   for (const k of await caches.keys()) if (k !== CACHE) await caches.delete(k);
